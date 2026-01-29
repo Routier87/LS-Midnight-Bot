@@ -1,0 +1,48 @@
+{
+  "token": "VOTRE_TOKEN_BOT",
+  "clientId": "ID_APPLICATION_BOT",
+  "guildId": "ID_SERVEUR_DISCORD",
+  "prefix": "!",
+  
+  "colors": {
+    "primary": "#3498db",
+    "success": "#2ecc71",
+    "error": "#e74c3c",
+    "warning": "#f1c40f",
+    "ls_midnight": "#0a0a2a"
+  },
+  
+  "tickets": {
+    "categoryId": "1463996207599845429",
+    "supportRoleId": "1463996203258871855",
+    "adminRoleId": "1463996203258871850",
+    "logChannelId": "1463996209172578542",
+    "transcriptChannelId": "",
+    "autoCloseHours": 48
+  },
+  
+  "logs": {
+    "channelId": "1463996209172578546",
+    "enabledEvents": [
+      "messageDelete",
+      "messageUpdate",
+      "guildMemberAdd",
+      "guildMemberRemove",
+      "guildMemberUpdate",
+      "channelCreate",
+      "channelDelete"
+    ]
+  },
+  
+  "roles": {
+    "staff": "1463996203258871849",
+    "moderator": "1463996203241836586",
+    "support": "1463996203258871855",
+    "admin": "1463996203258871850"
+  },
+  
+  "embeds": {
+    "footer": "LS Midnight RP • Système professionnel",
+    "iconURL": "https://cdn.discordapp.com/icons/VOTRE_SERVEUR_ID/VOTRE_ICONE.webp"
+  }
+}
