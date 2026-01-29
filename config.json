@@ -1,7 +1,7 @@
 {
   "token": "VOTRE_TOKEN_BOT_ICI",
-  "clientId": "ID_APPLICATION_BOT",
-  "guildId": "ID_SERVEUR_DISCORD",
+  "clientId": "1466471395587260426",
+  "guildId": "1463996203241836578",
   "prefix": "!",
   
   "colors": {
