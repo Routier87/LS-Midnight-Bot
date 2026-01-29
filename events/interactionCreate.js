@@ -388,4 +388,73 @@ async function handleTicketCreation(interaction, client) {
             .setTitle('📝 NOUVEAU TICKET')
             .setDescription(`Type: ${config.name}`)
             .addFields(
-                { name: '#️⃣ Numéro', value: `#${formatted
+                { name: '#️⃣ Numéro', value: `#${formattedNumber}`, inline: true },
+                { name: '👤 Créateur', value: user.tag, inline: true },
+                { name: '🔗 Salon', value: ticketChannel.toString(), inline: true }
+            )
+            .setColor(config.color)
+            .setTimestamp();
+        
+        await logChannel.send({ 
+            content: roleMentions.join(' '),
+            embeds: [logEmbed] 
+        });
+    }
+    
+    // Sauvegarder
+    client.saveTicketCounters();
+}
+
+async function handleCloseTicket(interaction, client) {
+    await interaction.deferReply();
+    
+    const channel = interaction.channel;
+    const user = interaction.user;
+    
+    // Vérifier les permissions
+    const supportRole = interaction.guild.roles.cache.get(client.config.tickets.supportRoleId);
+    const hasPermission = (supportRole && interaction.member.roles.cache.has(supportRole.id)) ||
+                         interaction.member.permissions.has(PermissionsBitField.Flags.ManageChannels);
+    
+    const isCreator = channel.topic && channel.topic.includes(user.id);
+    
+    if (!hasPermission && !isCreator) {
+        return interaction.editReply({ 
+            content: '❌ Permission refusée !' 
+        });
+    }
+    
+    const embed = new EmbedBuilder()
+        .setTitle('🔒 Fermeture du ticket')
+        .setDescription('Le ticket sera fermé dans 10 secondes...')
+        .setColor(0xe74c3c)
+        .setTimestamp();
+    
+    await interaction.editReply({ embeds: [embed] });
+    
+    setTimeout(async () => {
+        await channel.delete(`Fermé par ${user.tag}`);
+    }, 10000);
+}
+
+async function handleClaimTicket(interaction, client) {
+    await interaction.deferReply({ ephemeral: true });
+    
+    const supportRole = interaction.guild.roles.cache.get(client.config.tickets.supportRoleId);
+    const hasPermission = (supportRole && interaction.member.roles.cache.has(supportRole.id));
+    
+    if (!hasPermission) {
+        return interaction.editReply({ 
+            content: '❌ Seul le support peut prendre en charge.' 
+        });
+    }
+    
+    const newName = `🚨-${interaction.channel.name}`;
+    await interaction.channel.setName(newName);
+    
+    await interaction.channel.send(`**👤 ${interaction.user} a pris en charge ce ticket !**`);
+    
+    await interaction.editReply({ 
+        content: '✅ Ticket pris en charge !' 
+    });
+}
